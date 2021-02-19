@@ -75,6 +75,7 @@ export class CalculatorComponent implements OnInit {
     }
   }
 
+
   setValue() {
     this.newValue = Number(this.displayNumber.toString());
   }
