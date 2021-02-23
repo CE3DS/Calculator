@@ -1,15 +1,15 @@
-<div class="calculator-area bg-light">
-    <div class="input-group bg-dark">
-        <input type="text" class="calculator-small-interface bg-dark" value="{{ smallDisplayNumber }}" disabled>
-        <input type="text" class="calculator-interface bg-dark" value="{{ displayNumber }}" disabled>
+<div class="calculator-area">
+    <div class="input-group">
+        <input type="text" class="calculator-small-interface" value="{{ smallDisplayNumber }}" disabled>
+        <input type="text" class="calculator-interface" value="{{ displayNumber }}" disabled>
     </div>
 
 
     <div class="calculator-buttons">
-        <button class="btn btn-info" (click)="calculate('+')">+</button>
-        <button class="btn btn-info" (click)="calculate('-')">&minus;</button>
-        <button class="btn btn-info" value="*" (click)="calculate('*')">&times;</button>
-        <button class="btn btn-info" value="/" (click)="calculate('/')">&divide;</button>
+        <button class="btn btn-light" (click)="calculate('+')">+</button>
+        <button class="btn btn-light" (click)="calculate('-')">&minus;</button>
+        <button class="btn btn-light" value="*" (click)="calculate('*')">&times;</button>
+        <button class="btn btn-light" value="/" (click)="calculate('/')">&divide;</button>
 
         <button class="btn btn-dark" (click)="changeDisplay(7)">7</button>
         <button class="btn btn-dark" (click)="changeDisplay(8)">8</button>
@@ -23,15 +23,15 @@
         <button class="btn btn-dark" (click)="changeDisplay(2)">2</button>
         <button class="btn btn-dark" (click)="changeDisplay(3)">3</button>
 
-        <button class="btn btn-warning" (click)="addDot()">.</button>
+        <button class="btn btn-light" (click)="addDot()">.</button>
         <button class="btn btn-dark" (click)="changeDisplay(0)">0</button>
         <button class="btn btn-danger" (click)="allCLear()">AC</button>
 
-        <button class="equal-sign btn btn-success" (click)="calculate('=')">=</button>
+        <button class="equal-sign btn btn-danger" (click)="calculate('=')">=</button>
     </div>
 </div>
 
-<!-- <div style="position: absolute; color: rgb(138, 208, 255); font-size: 15px;">
+<div style="position: absolute; color: rgb(138, 208, 255); font-size: 15px;">
     <p>
         displayNumber = {{ displayNumber }}<br>
         smallDisplayNumber = {{ smallDisplayNumber }}<br>
@@ -42,5 +42,7 @@
         storedValue = {{ storedValue }}<br>
         firstOp = {{ firstOp }}<br>
         operationBreak = {{ operationBreak }}<br>
+        operationEnded = {{ operationEnded }}<br>
+        operation = {{ operation.toString() }}
     </p>
-</div> -->
+</div>
