@@ -27,10 +27,9 @@ export class CalculatorComponent implements OnInit {
 
 
   calculate(value: string) {
-    if ((!isNaN(this.lastChar)) && (this.lastChar != "")) {
-      this.operationEnded = false;
+    if ((!isNaN(this.lastChar)) && (this.lastChar != "") && (this.displayNumber != "ERROR")) {
+
       this.setValue();
-      this.operationBreak = true;
 
       if (value === '=') {
         this.doOperation(this.newValue, value)
@@ -45,6 +44,7 @@ export class CalculatorComponent implements OnInit {
           this.changeSmallDisplay(" = " + this.storedValue, "operation");
         }
         this.nextOperation = value;
+
       } else {
         this.doOperation(this.newValue, value)
 
@@ -56,6 +56,7 @@ export class CalculatorComponent implements OnInit {
 
         this.nextOperation = value;
         this.changeSmallDisplay(" " + this.nextOperation + " ", "operation");
+        this.operationEnded = false;
       }
     }
   }
@@ -63,22 +64,28 @@ export class CalculatorComponent implements OnInit {
 
   doOperation(value: number, next: string) {
     if (next === "=") {
-      this.operation.push(value.toString())
+      if (this.operation.length === 1) {
+        this.operation.splice(0, 1, value.toString());
+        this.storedValue = Number(this.operation[0]);
+      }
+      else {
+        this.operation.push(value.toString())
 
-      while (this.operation.includes("*") || this.operation.includes("/")) {
-        for (let i = 1; i <= this.operation.length; i++) {
-          if (this.operation[i] === "*") {
+        while (this.operation.includes("*") || this.operation.includes("/")) {
+          for (let i = 1; i <= this.operation.length; i++) {
+            if (this.operation[i] === "*") {
 
-            this.operationNumber = Number(this.operation[i - 1]) * Number(this.operation[i + 1])
-            this.operation.splice(i - 1, 3, this.operationNumber.toString())
-            break;
+              this.operationNumber = Number(this.operation[i - 1]) * Number(this.operation[i + 1])
+              this.operation.splice(i - 1, 3, this.operationNumber.toString())
+              break;
 
-          } else if (this.operation[i] === "/") {
+            } else if (this.operation[i] === "/") {
 
-            this.operationNumber = Number(this.operation[i - 1]) / Number(this.operation[i + 1])
-            this.operation.splice(i - 1, 3, this.operationNumber.toString())
-            break;
+              this.operationNumber = Number(this.operation[i - 1]) / Number(this.operation[i + 1])
+              this.operation.splice(i - 1, 3, this.operationNumber.toString())
+              break;
 
+            }
           }
         }
       }
@@ -106,7 +113,7 @@ export class CalculatorComponent implements OnInit {
       this.firstOp = false;
       this.operation.splice(0, 1, value.toString(), next)
     } else
-      if (!this.operationEnded)
+      if (this.operationEnded)
         this.operation.splice(0, 1, value.toString(), next);
       else
         this.operation.push(value.toString(), next);
@@ -115,7 +122,7 @@ export class CalculatorComponent implements OnInit {
 
   setValue() {
     this.newValue = Number(this.displayNumber.toString());
-    this.operationEnded = false;
+    this.operationBreak = true;
   }
 
 
@@ -139,7 +146,7 @@ export class CalculatorComponent implements OnInit {
       this.smallDisplayNumber = this.previousOperation + thisOperation;
     this.previousOperation = this.smallDisplayNumber;
 
-    if (this.operationEnded === true){
+    if (this.operationEnded === true) {
       this.lastChar = this.operation[this.operation.length - 1];
     }
     else if (newCharType === "value") {
